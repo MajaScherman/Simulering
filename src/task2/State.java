@@ -9,24 +9,29 @@ class State extends GlobalSimulation {
 
 	// Here follows the state variables and other variables that might be needed
 	// e.g. for measurements
-	public int nrOfArrivals = 0, rejected = 0, numberInQueue1 = 0, numberInQueue2 = 0, accumulated1 = 0, accumulated2 = 0,
-			noMeasurements = 0;
-	public double beta1 = 2.1, beta2 = 5; 
-	public double arrivalSpeed = 5, serviceTimeQ2 = 2;//change these parameters to test different situations
+	public int nrOfArrivals = 0, rejected = 0, numberInQueueA = 0, numberInQueueB = 0, accumulated1 = 0,
+			accumulated2 = 0, noMeasurements = 0;
+	public double lambda = 150, x_a = 0.002, x_b = 0.004, d = 1;
+	public double arrivalSpeed = 5, serviceTimeQ2 = 2;// change these parameters
+														// to test different
+														// situations
 
 	// The following method is called by the main program each time a new event
 	// has been fetched
 	// from the event list in the main loop.
 	public void treatEvent(Event x) {
 		switch (x.eventType) {
-		case ARRIVAL:
-			arrival();
+		case ARRIVAL_A:
+			arrivalA();
 			break;
-		case DEPARTURE_FROM_1:
-			departureFrom1();
+		case DEPARTURE_A:
+			departureA();
 			break;
-		case DEPARTURE_FROM_2:
-			departureFrom2();
+		case ARRIVAL_B:
+			arrivalB();
+			break;
+		case DEPARTURE_B:
+			departureB();
 			break;
 		case MEASURE:
 			measure();
@@ -40,42 +45,41 @@ class State extends GlobalSimulation {
 	// write a method if
 	// things are getting more complicated than this.
 
-	private void arrival() {
+	private void arrivalA() {
 		nrOfArrivals++;
-		if (numberInQueue1 < 10) {
-			if (numberInQueue1 == 0)
-				insertEvent(DEPARTURE_FROM_1, time + expDist(beta1));
-			numberInQueue1++;
-		}else{
-			rejected++;
-		}
-		insertEvent(ARRIVAL, time + arrivalSpeed);
+		if (numberInQueueA == 0)
+			insertEvent(DEPARTURE_A, time + x_a);
+		numberInQueueA++;
+		insertEvent(ARRIVAL_A, time + expDist(lambda));
 	}
 
-	private void departureFrom1() {
-		numberInQueue1--;
-		if (numberInQueue1 > 0)
-			insertEvent(DEPARTURE_FROM_1, time + expDist(beta1));
-		if (numberInQueue2 == 0)
-			insertEvent(DEPARTURE_FROM_2, time + serviceTimeQ2);
-		numberInQueue2++;
+	private void departureA() {
+		numberInQueueA--;
+		if (numberInQueueA > 0)
+			insertEvent(DEPARTURE_A, time + x_a);
+		insertEvent(ARRIVAL_B, time + d);
 	}
 
-	private void departureFrom2() {
-		numberInQueue2--;
-		if (numberInQueue2 > 0)
-			insertEvent(DEPARTURE_FROM_2, time + serviceTimeQ2);
+	private void arrivalB() {
+		if (numberInQueueB == 0)
+			insertEvent(DEPARTURE_B, time + x_b);
+		numberInQueueB++;
+	}
+
+	private void departureB() {
+		numberInQueueB--;
+		if (numberInQueueB > 0)
+			insertEvent(DEPARTURE_B, time + x_b);
 	}
 
 	private void measure() {
-		accumulated1 += numberInQueue1;
-		accumulated2 += numberInQueue2;
+		accumulated1 += numberInQueueA;
+		accumulated2 += numberInQueueB;
 		noMeasurements++;
-		insertEvent(MEASURE, time + expDist(beta2));
+		insertEvent(MEASURE, time + expDist(lambda));
 	}
-	
-	
-	private double expDist(double beta){
-		return (-beta) * Math.log(1 - slump.nextDouble());
+
+	private double expDist(double lambda) {
+		return (-1 / lambda) * Math.log(1 - slump.nextDouble());
 	}
 }
