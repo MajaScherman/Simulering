@@ -9,11 +9,10 @@ class State extends GlobalSimulation {
 
 	// Here follows the state variables and other variables that might be needed
 	// e.g. for measurements
-	public int nrOfArrivals = 0, numberInQueue1 = 0, numberInQueue2 = 0, accumulated1 = 0, accumulated2 = 0,
+	public int nrOfArrivals = 0, rejected = 0, numberInQueue1 = 0, numberInQueue2 = 0, accumulated1 = 0, accumulated2 = 0,
 			noMeasurements = 0;
-	public double beta1 = 2.1, beta2 = 5;
-	public double arrivalSpeed = 2, serviceTimeQ1 = (-beta1) * Math.log(1 - slump.nextDouble()), serviceTimeQ2 = 2,
-			measureTime = (-beta2) * Math.log(1 - slump.nextDouble());
+	public double beta1 = 2.1, beta2 = 5; 
+	public double arrivalSpeed = 1, serviceTimeQ2 = 2;//change these parameters to test different situations
 
 	// The following method is called by the main program each time a new event
 	// has been fetched
@@ -45,8 +44,10 @@ class State extends GlobalSimulation {
 		nrOfArrivals++;
 		if (numberInQueue1 < 10) {
 			if (numberInQueue1 == 0)
-				insertEvent(DEPARTURE_FROM_1, time + serviceTimeQ1);
+				insertEvent(DEPARTURE_FROM_1, time + expDist(beta1));
 			numberInQueue1++;
+		}else{
+			rejected++;
 		}
 		insertEvent(ARRIVAL, time + arrivalSpeed);
 	}
@@ -54,7 +55,7 @@ class State extends GlobalSimulation {
 	private void departureFrom1() {
 		numberInQueue1--;
 		if (numberInQueue1 > 0)
-			insertEvent(DEPARTURE_FROM_1, time + serviceTimeQ1);
+			insertEvent(DEPARTURE_FROM_1, time + expDist(beta1));
 		if (numberInQueue2 == 0)
 			insertEvent(DEPARTURE_FROM_2, time + serviceTimeQ2);
 		numberInQueue2++;
@@ -70,6 +71,11 @@ class State extends GlobalSimulation {
 		accumulated1 += numberInQueue1;
 		accumulated2 += numberInQueue2;
 		noMeasurements++;
-		insertEvent(MEASURE, time + measureTime);
+		insertEvent(MEASURE, time + expDist(beta2));
+	}
+	
+	
+	private double expDist(double beta){
+		return (-beta) * Math.log(1 - slump.nextDouble());
 	}
 }

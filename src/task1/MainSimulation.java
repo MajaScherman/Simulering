@@ -20,9 +20,8 @@ public class MainSimulation extends GlobalSimulation {
 		}
 
 		// Printing the result of the simulation, in this case a mean value
-		System.out.println(1.0 * actState.accumulated1 / actState.noMeasurements);
-		System.out.println(1.0 * actState.accumulated2 / actState.noMeasurements);
-		System.out.println(
-				"Probability of rejection: " + (1 - (1.0 * actState.accumulated1) / (1.0 * actState.nrOfArrivals)));
+		System.out.println("Average number of clients in queue 1: " + 1.0 * actState.accumulated1 / actState.noMeasurements);
+		System.out.println("Average number of clients in queue 2: " + 1.0 * actState.accumulated2 / actState.noMeasurements);
+		System.out.println("Probability of rejection: " + (1.0 * actState.rejected) / (1.0 * actState.nrOfArrivals));
 	}
 }
