@@ -13,7 +13,7 @@ public class MainSimulation extends GlobalSimulation {
 		insertEvent(MEASURE, 5);
 
 		// The main simulation loop
-		while (time < 10000) {
+		while (actState.noMeasurements < 1000) {
 			actEvent = eventList.fetchEvent();
 			time = actEvent.eventTime;
 			actState.treatEvent(actEvent);
