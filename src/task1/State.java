@@ -75,7 +75,7 @@ class State extends GlobalSimulation {
 	}
 	
 	
-	private double expDist(double beta){
+	public double expDist(double beta){
 		return (-beta) * Math.log(1 - slump.nextDouble());
 	}
 }
