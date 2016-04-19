@@ -25,5 +25,36 @@ public class MainSimulation extends GlobalSimulation {
 				"Average number of packets in queue B: " + 1.0 * actState.accumulated2 / actState.noMeasurements);
 		System.out.println("Average number of packets in queue: "
 				+ 1.0 * (actState.accumulated1 + actState.accumulated2) / actState.noMeasurements);
+		
+		try {
+			ProcessBuilder process = new ProcessBuilder("/bin/rm", "/Users/krlun/git/Simulering/src/task2/a.m");
+			Process p = process.start();
+			try {
+				p.waitFor();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			PrintWriter writer = new PrintWriter("/Users/krlun/git/Simulering/src/task2/a.m", "UTF-8");
+			StringBuilder outputLine = new StringBuilder();
+			outputLine.append("b = [");
+			writer.println(outputLine);
+			
+			for (int i = 0; i < actState.noMeasurements; i++) {
+				outputLine = new StringBuilder();
+				outputLine.append(actState.timeList.get(i) + " " + actState.numberInQueueAList.get(i) + " " + actState.numberInQueueBList.get(i) + ";");
+				writer.println(outputLine);
+			}
+			outputLine = new StringBuilder();
+			outputLine.append("];");
+			writer.println(outputLine);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
