@@ -52,10 +52,10 @@ class State extends GlobalSimulation {
 
 	private void readyA() {
 		numberInQueueA--;
-		//insertEvent(ARRIVAL_B, time + d);//Assignment 1
-		insertEvent(ARRIVAL_B, time + expDist(d));//Assignment 2
+		insertEvent(ARRIVAL_B, time + d);//Assignment 1
+		//insertEvent(ARRIVAL_B, time + expDist(d));//Assignment 2
 		if (numberInQueueB > 0)
-			insertEvent(READY_B, time + x_b);
+			insertEvent(READY_B, time + x_b); 
 		else if (numberInQueueA > 0)
 			insertEvent(READY_A, time + x_a);
 	}

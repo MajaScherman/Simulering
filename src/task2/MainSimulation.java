@@ -13,24 +13,26 @@ public class MainSimulation extends GlobalSimulation {
 		insertEvent(MEASURE, 0.1);
 
 		// The main simulation loop
-/*		while (actState.noMeasurements < 1000) {
+		while (actState.noMeasurements < 1000) {
 			actEvent = eventList.fetchEvent();
 			time = actEvent.eventTime;
 			actState.treatEvent(actEvent);
 		}
-*/
-		double sum = 0;
-		double a = 0;
-		int n = 100000;
-		for (int i = 0; i < n; i++) {
-			a = actState.expDist(1);
-			System.out.println(a);
-			sum += a;
-		}
-		System.out.println("Average: " + a/sum);
+		/*
+		 * double sum = 0; double a = 0; int n = 100000; for (int i = 0; i < n;
+		 * i++) { a = actState.expDist(1); System.out.println(a); sum += a; }
+		 * 
+		 * System.out.println("Average: " + sum/n);
+		 * 
+		 */
 		// Printing the result of the simulation, in this case a mean value
+		System.out.println(
+				"Average number of packets in queue A: " + 1.0 * actState.accumulated1 / actState.noMeasurements);
+		System.out.println(
+				"Average number of packets in queue B: " + 1.0 * actState.accumulated2 / actState.noMeasurements);
 		System.out.println("Average number of packets in queue: "
 				+ 1.0 * (actState.accumulated1 + actState.accumulated2) / actState.noMeasurements);
-		//System.out.println("Probability of rejection: " + 1.0 * actState.rejected / actState.nrOfArrivals);
+		// System.out.println("Probability of rejection: " + 1.0 *
+		// actState.rejected / actState.nrOfArrivals);
 	}
 }
