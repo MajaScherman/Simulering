@@ -1,6 +1,6 @@
 package task2;
 
-public class EventListClass extends GlobalSimulation{
+public class EventListClass {
 
 	private Event list, last; // Used to build a linked list
 
@@ -39,19 +39,6 @@ public class EventListClass extends GlobalSimulation{
 		dummy = list.next;
 		list.next = dummy.next;
 		dummy.next = null;
-		return dummy;
-	}
-	//TODO FIX THIS AWEFULNESS!!!!!
-	public Event fetchEventPrioB() {
-		Event dummy, predummy;
-		predummy = list;
-		dummy = list.next;
-		while (dummy.eventType != DEPARTURE_B || dummy.eventType != ARRIVAL_B) {
-			predummy = dummy;
-			dummy = dummy.next;  
-		}
-		if(dummy.eventType != DEPARTURE_B || dummy.eventType != ARRIVAL_B)
-			dummy = fetchEvent();
 		return dummy;
 	}
 }

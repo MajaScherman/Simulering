@@ -12,9 +12,6 @@ class State extends GlobalSimulation {
 	public int nrOfArrivals = 0, rejected = 0, numberInQueueA = 0, numberInQueueB = 0, accumulated1 = 0,
 			accumulated2 = 0, noMeasurements = 0;
 	public double lambda = 150, x_a = 0.002, x_b = 0.004, d = 1;
-	public double arrivalSpeed = 5, serviceTimeQ2 = 2;// change these parameters
-														// to test different
-														// situations
 
 	// The following method is called by the main program each time a new event
 	// has been fetched
@@ -24,14 +21,14 @@ class State extends GlobalSimulation {
 		case ARRIVAL_A:
 			arrivalA();
 			break;
-		case DEPARTURE_A:
-			departureA();
+		case READY_A:
+			readyA();
 			break;
 		case ARRIVAL_B:
 			arrivalB();
 			break;
-		case DEPARTURE_B:
-			departureB();
+		case READY_B:
+			readyB();
 			break;
 		case MEASURE:
 			measure();
@@ -47,36 +44,45 @@ class State extends GlobalSimulation {
 
 	private void arrivalA() {
 		nrOfArrivals++;
-		if (numberInQueueA == 0)
-			insertEvent(DEPARTURE_A, time + x_a);
+		// if (numberInQueueB > 0) {
+		// insertEvent(READY_B, time + x_b);
+		// } else
+		if ((numberInQueueA == 0) && (numberInQueueB == 0))
+			insertEvent(READY_A, time + x_a);
 		numberInQueueA++;
 		insertEvent(ARRIVAL_A, time + expDist(lambda));
 	}
 
-	private void departureA() {
+	private void readyA() {
 		numberInQueueA--;
-		if (numberInQueueA > 0)
-			insertEvent(DEPARTURE_A, time + x_a);
 		insertEvent(ARRIVAL_B, time + d);
+		if (numberInQueueB > 0)
+			insertEvent(READY_B, time + x_b);
+		else if (numberInQueueA > 0)
+			insertEvent(READY_A, time + x_a);
 	}
 
 	private void arrivalB() {
-		if (numberInQueueB == 0)
-			insertEvent(DEPARTURE_B, time + x_b);
+		if ((numberInQueueB == 0) && (numberInQueueA == 0))
+			insertEvent(READY_B, time + x_b);
+		// else if (numberInQueueA == 0)
+		// insertEvent(READY_A, time + x_a);
 		numberInQueueB++;
 	}
 
-	private void departureB() {
+	private void readyB() {
 		numberInQueueB--;
 		if (numberInQueueB > 0)
-			insertEvent(DEPARTURE_B, time + x_b);
+			insertEvent(READY_B, time + x_b);
+		else if (numberInQueueA > 0)
+			insertEvent(READY_A, time + x_a);
 	}
 
 	private void measure() {
 		accumulated1 += numberInQueueA;
 		accumulated2 += numberInQueueB;
 		noMeasurements++;
-		insertEvent(MEASURE, time + expDist(lambda));
+		insertEvent(MEASURE, time + 0.1);
 	}
 
 	private double expDist(double lambda) {
