@@ -44,9 +44,6 @@ class State extends GlobalSimulation {
 
 	private void arrivalA() {
 		nrOfArrivals++;
-		// if (numberInQueueB > 0) {
-		// insertEvent(READY_B, time + x_b);
-		// } else
 		if ((numberInQueueA == 0) && (numberInQueueB == 0))
 			insertEvent(READY_A, time + x_a);
 		numberInQueueA++;
@@ -55,7 +52,8 @@ class State extends GlobalSimulation {
 
 	private void readyA() {
 		numberInQueueA--;
-		insertEvent(ARRIVAL_B, time + d);
+		//insertEvent(ARRIVAL_B, time + d);//Assignment 1
+		insertEvent(ARRIVAL_B, time + expDist(d));//Assignment 2
 		if (numberInQueueB > 0)
 			insertEvent(READY_B, time + x_b);
 		else if (numberInQueueA > 0)
@@ -65,8 +63,6 @@ class State extends GlobalSimulation {
 	private void arrivalB() {
 		if ((numberInQueueB == 0) && (numberInQueueA == 0))
 			insertEvent(READY_B, time + x_b);
-		// else if (numberInQueueA == 0)
-		// insertEvent(READY_A, time + x_a);
 		numberInQueueB++;
 	}
 
@@ -85,7 +81,7 @@ class State extends GlobalSimulation {
 		insertEvent(MEASURE, time + 0.1);
 	}
 
-	private double expDist(double lambda) {
+	public double expDist(double lambda) {
 		return (-1 / lambda) * Math.log(1 - slump.nextDouble());
 	}
 }
