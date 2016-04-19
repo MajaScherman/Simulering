@@ -12,6 +12,7 @@ class State extends GlobalSimulation {
 	public int nrOfArrivals = 0, rejected = 0, numberInQueueA = 0, numberInQueueB = 0, accumulated1 = 0,
 			accumulated2 = 0, noMeasurements = 0;
 	public double lambda = 150, x_a = 0.002, x_b = 0.004, d = 1;
+	public int task = 3; // Change here for the different assignments
 
 	// The following method is called by the main program each time a new event
 	// has been fetched
@@ -52,12 +53,17 @@ class State extends GlobalSimulation {
 
 	private void readyA() {
 		numberInQueueA--;
-		insertEvent(ARRIVAL_B, time + d);//Assignment 1
-		//insertEvent(ARRIVAL_B, time + expDist(d));//Assignment 2
-		if (numberInQueueB > 0)
-			insertEvent(READY_B, time + x_b); 
-		else if (numberInQueueA > 0)
-			insertEvent(READY_A, time + x_a);
+		if (task == 1) {
+			insertEvent(ARRIVAL_B, time + d);
+			task1();
+		} else if(task == 2){
+			insertEvent(ARRIVAL_B, time + expDist(d));
+			task1();
+		}else if(task == 3){
+			insertEvent(ARRIVAL_B, time + d);
+			task3();
+		}
+
 	}
 
 	private void arrivalB() {
@@ -68,10 +74,24 @@ class State extends GlobalSimulation {
 
 	private void readyB() {
 		numberInQueueB--;
+		if(task == 1 || task == 2){ 
+			task1();
+		} else if (task == 3){ 
+			task3();
+		}
+		
+	}
+	private void task1(){
 		if (numberInQueueB > 0)
 			insertEvent(READY_B, time + x_b);
 		else if (numberInQueueA > 0)
 			insertEvent(READY_A, time + x_a);
+	}
+	private void task3(){
+		if (numberInQueueA > 0)
+			insertEvent(READY_A, time + x_a);
+		else if (numberInQueueB > 0)
+			insertEvent(READY_B, time + x_b);
 	}
 
 	private void measure() {
