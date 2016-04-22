@@ -12,7 +12,7 @@ class State extends GlobalSimulation {
 	public int nrOfArrivals = 0, rejected = 0, numberInQueueA = 0, numberInQueueB = 0, accumulated1 = 0,
 			accumulated2 = 0, noMeasurements = 0;
 	public double lambda = 150, x_a = 0.002, x_b = 0.004, d = 1;
-	public int task = 1; // Change here for the different assignments
+	public int task = 3; // Change here for the different assignments
 	public ArrayList<Double> timeList = new ArrayList<Double>();
 	public ArrayList<Integer> numberInQueueAList = new ArrayList<Integer>();
 	public ArrayList<Integer> numberInQueueBList = new ArrayList<Integer>();
