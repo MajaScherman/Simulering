@@ -13,7 +13,7 @@ public class MainSimulation extends GlobalSimulation {
 		insertEvent(MEASURE, actState.expDist(actState.beta2));
 
 		// The main simulation loop
-		while (actState.noMeasurements < 1000) {
+		while (actState.noMeasurements < 10000) {
 			actEvent = eventList.fetchEvent();
 			time = actEvent.eventTime;
 			actState.treatEvent(actEvent);

@@ -12,11 +12,11 @@ class State extends GlobalSimulation {
 	public int nrOfArrivals = 0, numberInQueue1 = 0, numberInQueue2 = 0, accumulated1 = 0,
 			accumulated2 = 0, noMeasurements = 0;
 	public double beta1 = 1, beta2 = 5;
-	public double arrivalSpeed = 1.1, serviceTimeQ2 = 2;
+	public double arrivalSpeed = 1.5, serviceTimeQ2 = 2;
 	public ArrayList<Double> timeList = new ArrayList<Double>();
 	public ArrayList<Integer> numberInQueue1List = new ArrayList<Integer>();
 	public ArrayList<Integer> numberInQueue2List = new ArrayList<Integer>();
-	public ArrayList<I>
+	public LinkedList<Double> arrivalTime = new LinkedList<Double>();
 	public ArrayList<Double> meanTimeInQueue = new ArrayList<Double>();
 
 	// The following method is called by the main program each time a new event
@@ -28,12 +28,10 @@ class State extends GlobalSimulation {
 			arrival();
 			break;
 		case DEPARTURE_FROM_1:
-			//System.out.println(x.arrivalTime);
 			departureFrom1();
 			break;
 		case DEPARTURE_FROM_2:
 			departureFrom2();
-			//System.out.println(x.arrivalTime);
 			break;
 		case MEASURE:
 			measure();
@@ -49,6 +47,7 @@ class State extends GlobalSimulation {
 
 	private void arrival() {
 		nrOfArrivals++;
+		arrivalTime.add(time);
 		if (numberInQueue1 == 0)
 			insertEvent(DEPARTURE_FROM_1, time + expDist(beta1));
 		numberInQueue1++;
@@ -66,6 +65,7 @@ class State extends GlobalSimulation {
 
 	private void departureFrom2() {
 		numberInQueue2--;
+		meanTimeInQueue.add(time - arrivalTime.pop());
 		if (numberInQueue2 > 0)
 			insertEvent(DEPARTURE_FROM_2, time + expDist(beta1));
 	}
