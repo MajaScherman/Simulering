@@ -12,7 +12,7 @@ class State extends GlobalSimulation {
 	public int nrOfArrivals = 0, numberInQueue1 = 0, numberInQueue2 = 0, accumulated1 = 0,
 			accumulated2 = 0, noMeasurements = 0;
 	public double beta1 = 1, beta2 = 5;
-	public double arrivalSpeed = 1.5, serviceTimeQ2 = 2;
+	public double arrivalSpeed = 1.1, serviceTimeQ2 = 2;
 	public ArrayList<Double> timeList = new ArrayList<Double>();
 	public ArrayList<Integer> numberInQueue1List = new ArrayList<Integer>();
 	public ArrayList<Integer> numberInQueue2List = new ArrayList<Integer>();
