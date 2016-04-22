@@ -22,11 +22,25 @@ public class MainSimulation extends Global{
     	// Here process instances are created (two queues and one generator) and their parameters are given values.
 
     	QS Q1 = new QS();
+    	QS Q2 = new QS();
+    	QS Q3 = new QS();
+    	QS Q4 = new QS();
+    	QS Q5 = new QS();
+    	
+    	Dispatcher dispatcher = new Dispatcher(); //Q1, Q2, Q3, Q4, Q5);
+    	dispatcher.sendTo1 = Q1;
+    	dispatcher.sendTo2 = Q2;
+    	dispatcher.sendTo3 = Q3;
+    	dispatcher.sendTo4 = Q4;
+    	dispatcher.sendTo5 = Q5;
+
+    	
+    	
     	Q1.sendTo = null;
     	
     	Gen Generator = new Gen();
     	Generator.lambda = 9; //Generator ska generera nio kunder per sekund  //Generator shall generate 9 customers per second
-    	Generator.sendTo = Q1; //De genererade kunderna ska skickas till kösystemet QS  // The generated customers shall be sent to Q1
+    	Generator.sendTo = dispatcher; //De genererade kunderna ska skickas till kösystemet QS  // The generated customers shall be sent to Q1
 
     	//Här nedan skickas de första signalerna för att simuleringen ska komma igång.
     	//To start the simulation the first signals are put in the signal list
