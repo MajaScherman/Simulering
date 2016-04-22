@@ -59,10 +59,10 @@ class State extends GlobalSimulation {
 		if (task == 1) {
 			insertEvent(ARRIVAL_B, time + d);
 			task1();
-		} else if(task == 2){
+		} else if (task == 2) {
 			insertEvent(ARRIVAL_B, time + expDist(d));
 			task1();
-		}else if(task == 3){
+		} else if (task == 3) {
 			insertEvent(ARRIVAL_B, time + d);
 			task3();
 		}
@@ -77,20 +77,22 @@ class State extends GlobalSimulation {
 
 	private void readyB() {
 		numberInQueueB--;
-		if(task == 1 || task == 2){ 
+		if (task == 1 || task == 2) {
 			task1();
-		} else if (task == 3){ 
+		} else if (task == 3) {
 			task3();
 		}
-		
+
 	}
-	private void task1(){
+
+	private void task1() {
 		if (numberInQueueB > 0)
 			insertEvent(READY_B, time + x_b);
 		else if (numberInQueueA > 0)
 			insertEvent(READY_A, time + x_a);
 	}
-	private void task3(){
+
+	private void task3() {
 		if (numberInQueueA > 0)
 			insertEvent(READY_A, time + x_a);
 		else if (numberInQueueB > 0)
