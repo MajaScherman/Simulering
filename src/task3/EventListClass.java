@@ -14,12 +14,12 @@ public class EventListClass extends GlobalSimulation {
 	// events for the
 	// right place to put the new event.
 
-	public void InsertEvent(int type, double TimeOfEvent, double arrivalTime) {
+	public void InsertEvent(int type, double TimeOfEvent) {
 		Event dummy, predummy;
 		Event newEvent = new Event();
 		newEvent.eventType = type;
 		newEvent.eventTime = TimeOfEvent;
-		newEvent.arrivalTime = arrivalTime;
+
 		predummy = list;
 		dummy = list.next;
 		while ((dummy.eventTime < newEvent.eventTime) & (dummy != last)) {

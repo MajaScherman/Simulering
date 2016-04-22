@@ -16,6 +16,7 @@ class State extends GlobalSimulation {
 	public ArrayList<Double> timeList = new ArrayList<Double>();
 	public ArrayList<Integer> numberInQueue1List = new ArrayList<Integer>();
 	public ArrayList<Integer> numberInQueue2List = new ArrayList<Integer>();
+	public ArrayList<I>
 	public ArrayList<Double> meanTimeInQueue = new ArrayList<Double>();
 
 	// The following method is called by the main program each time a new event
@@ -24,16 +25,15 @@ class State extends GlobalSimulation {
 	public void treatEvent(Event x) {
 		switch (x.eventType) {
 		case ARRIVAL:
-			arrival(time);
+			arrival();
 			break;
 		case DEPARTURE_FROM_1:
 			//System.out.println(x.arrivalTime);
-			departureFrom1(x.arrivalTime);
+			departureFrom1();
 			break;
 		case DEPARTURE_FROM_2:
-			departureFrom2(x.arrivalTime);
+			departureFrom2();
 			//System.out.println(x.arrivalTime);
-			meanTimeInQueue.add(time-x.arrivalTime);
 			break;
 		case MEASURE:
 			measure();
@@ -47,34 +47,34 @@ class State extends GlobalSimulation {
 	// write a method if
 	// things are getting more complicated than this.
 
-	private void arrival(double arrivalTime) {
+	private void arrival() {
 		nrOfArrivals++;
 		if (numberInQueue1 == 0)
-			insertEvent(DEPARTURE_FROM_1, time + expDist(beta1), arrivalTime);
+			insertEvent(DEPARTURE_FROM_1, time + expDist(beta1));
 		numberInQueue1++;
-		insertEvent(ARRIVAL, time + expDist(arrivalSpeed), time);
+		insertEvent(ARRIVAL, time + expDist(arrivalSpeed));
 	}
 
-	private void departureFrom1(double arrivalTime) {
+	private void departureFrom1() {
 		numberInQueue1--;
 		if (numberInQueue1 > 0)
-			insertEvent(DEPARTURE_FROM_1, time + expDist(beta1), arrivalTime);
+			insertEvent(DEPARTURE_FROM_1, time + expDist(beta1));
 		if (numberInQueue2 == 0)
-			insertEvent(DEPARTURE_FROM_2, time + expDist(beta1), arrivalTime);
+			insertEvent(DEPARTURE_FROM_2, time + expDist(beta1));
 		numberInQueue2++;
 	}
 
-	private void departureFrom2(double arrivalTime) {
+	private void departureFrom2() {
 		numberInQueue2--;
 		if (numberInQueue2 > 0)
-			insertEvent(DEPARTURE_FROM_2, time + expDist(beta1), arrivalTime);
+			insertEvent(DEPARTURE_FROM_2, time + expDist(beta1));
 	}
 
 	private void measure() {
 		accumulated1 += numberInQueue1;
 		accumulated2 += numberInQueue2;
 		noMeasurements++;
-		insertEvent(MEASURE, time + expDist(beta2), 0);
+		insertEvent(MEASURE, time + expDist(beta2));
 		timeList.add(time);
 		numberInQueue1List.add(numberInQueue1);
 		numberInQueue2List.add(numberInQueue2);

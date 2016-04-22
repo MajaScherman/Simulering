@@ -7,6 +7,5 @@ package task3;
 class Event{
 	public double eventTime;
 	public int eventType;
-	public double arrivalTime;
 	public Event next;
 }
