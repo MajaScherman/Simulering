@@ -1,6 +1,6 @@
 package task3;
 
-public class EventListClass {
+public class EventListClass extends GlobalSimulation {
 
 	private Event list, last; // Used to build a linked list
 
@@ -19,6 +19,9 @@ public class EventListClass {
 		Event newEvent = new Event();
 		newEvent.eventType = type;
 		newEvent.eventTime = TimeOfEvent;
+		if (type == ARRIVAL) {
+			newEvent.arrivalTime = TimeOfEvent;
+		}
 		predummy = list;
 		dummy = list.next;
 		while ((dummy.eventTime < newEvent.eventTime) & (dummy != last)) {

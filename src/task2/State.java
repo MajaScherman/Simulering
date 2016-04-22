@@ -66,7 +66,6 @@ class State extends GlobalSimulation {
 			insertEvent(ARRIVAL_B, time + d);
 			task3();
 		}
-
 	}
 
 	private void arrivalB() {
