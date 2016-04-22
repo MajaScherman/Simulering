@@ -24,14 +24,16 @@ class State extends GlobalSimulation {
 	public void treatEvent(Event x) {
 		switch (x.eventType) {
 		case ARRIVAL:
-			arrival();
+			arrival(time);
 			break;
 		case DEPARTURE_FROM_1:
-			departureFrom1();
+			//System.out.println(x.arrivalTime);
+			departureFrom1(x.arrivalTime);
 			break;
 		case DEPARTURE_FROM_2:
-			departureFrom2();
-			meanTimeInQueue.add(x.eventTime-x.arrivalTime);
+			departureFrom2(x.arrivalTime);
+			//System.out.println(x.arrivalTime);
+			meanTimeInQueue.add(time-x.arrivalTime);
 			break;
 		case MEASURE:
 			measure();
@@ -45,34 +47,34 @@ class State extends GlobalSimulation {
 	// write a method if
 	// things are getting more complicated than this.
 
-	private void arrival() {
+	private void arrival(double arrivalTime) {
 		nrOfArrivals++;
 		if (numberInQueue1 == 0)
-			insertEvent(DEPARTURE_FROM_1, time + expDist(beta1));
+			insertEvent(DEPARTURE_FROM_1, time + expDist(beta1), arrivalTime);
 		numberInQueue1++;
-		insertEvent(ARRIVAL, time + expDist(arrivalSpeed));
+		insertEvent(ARRIVAL, time + expDist(arrivalSpeed), time);
 	}
 
-	private void departureFrom1() {
+	private void departureFrom1(double arrivalTime) {
 		numberInQueue1--;
 		if (numberInQueue1 > 0)
-			insertEvent(DEPARTURE_FROM_1, time + expDist(beta1));
+			insertEvent(DEPARTURE_FROM_1, time + expDist(beta1), arrivalTime);
 		if (numberInQueue2 == 0)
-			insertEvent(DEPARTURE_FROM_2, time + expDist(beta1));
+			insertEvent(DEPARTURE_FROM_2, time + expDist(beta1), arrivalTime);
 		numberInQueue2++;
 	}
 
-	private void departureFrom2() {
+	private void departureFrom2(double arrivalTime) {
 		numberInQueue2--;
 		if (numberInQueue2 > 0)
-			insertEvent(DEPARTURE_FROM_2, time + expDist(beta1));
+			insertEvent(DEPARTURE_FROM_2, time + expDist(beta1), arrivalTime);
 	}
 
 	private void measure() {
 		accumulated1 += numberInQueue1;
 		accumulated2 += numberInQueue2;
 		noMeasurements++;
-		insertEvent(MEASURE, time + expDist(beta2));
+		insertEvent(MEASURE, time + expDist(beta2), 0);
 		timeList.add(time);
 		numberInQueue1List.add(numberInQueue1);
 		numberInQueue2List.add(numberInQueue2);

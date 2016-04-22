@@ -9,11 +9,11 @@ public class MainSimulation extends GlobalSimulation {
 		Event actEvent;
 		State actState = new State(); // The state that should be used
 		// Some events must be put in the event list at the beginning
-		insertEvent(ARRIVAL, 0);
-		insertEvent(MEASURE, actState.expDist(actState.beta2));
+		insertEvent(ARRIVAL, 0, 0);
+		insertEvent(MEASURE, actState.expDist(actState.beta2), 0);
 
 		// The main simulation loop
-		while (actState.noMeasurements < 10000) {
+		while (actState.noMeasurements < 1000) {
 			actEvent = eventList.fetchEvent();
 			time = actEvent.eventTime;
 			actState.treatEvent(actEvent);
@@ -24,7 +24,7 @@ public class MainSimulation extends GlobalSimulation {
 		System.out.println("Average number of clients in queue 2: " + 1.0 * actState.accumulated2 / actState.noMeasurements);
 		System.out.println("Sum of average number of clients: " + 1.0 * (actState.accumulated1 + actState.accumulated2)/actState.noMeasurements);
 		
-		int sum = 0;
+		double sum = 0;
 		for (int i = 0; i < actState.meanTimeInQueue.size(); i++) {
 			sum += actState.meanTimeInQueue.get(i);
 		}
