@@ -35,7 +35,7 @@ public class MainSimulation extends Global{
     	SignalList.SendSignal(MEASURE, Q1, time);
 
 
-    	// Detta �r simuleringsloopen:
+    	// Detta är simuleringsloopen:
     	// This is the main loop
 
     	while (time < 100000){
