@@ -45,7 +45,7 @@ class Dispatcher extends Proc {
 				break;
 			}
 			case 1: {
-				switch(rr) {
+				switch (rr) {
 				case 0:
 					SignalList.SendSignal(ARRIVAL, sendTo1, time);
 					rr++;
@@ -76,19 +76,19 @@ class Dispatcher extends Proc {
 				a[2] = sendTo3.numberInQueue;
 				a[3] = sendTo4.numberInQueue;
 				a[4] = sendTo5.numberInQueue;
-				
+
 				int min = Math.min(a[0], Math.min(a[1], Math.min(a[2], Math.min(a[3], a[4]))));
 				ArrayList<Integer> minList = new ArrayList<Integer>();
-				
+
 				for (int i = 0; i < 5; i++) {
 					if (a[i] == min)
-					minList.add(i);
+						minList.add(i);
 				}
-				
+
 				int rand = slump.nextInt(minList.size());
-				
+
 				int next = minList.get(rand);
-				
+
 				switch (next) {
 				case 0:
 					SignalList.SendSignal(ARRIVAL, sendTo1, time);
@@ -108,12 +108,10 @@ class Dispatcher extends Proc {
 				}
 				break;
 			}
-
 			}
 
 		}
 			break;
-
 		}
 	}
 }
