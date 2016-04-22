@@ -1,9 +1,9 @@
 package task5;
 
-//Denna klass definerar vad som ska finnas i en signal. Det som finns h�r �r ett minimum. Man kan l�gga till mer
+//Denna klass definerar vad som ska finnas i en signal. Det som finns här är ett minimum. Man kan lägga till mer
 //om man vill att en signal ska kunna skicka mer information.
 
-//This class defines a signal. What can be seen here is a mainimum. If one wants to add more
+//This class defines a signal. What can be seen here is a minimum. If one wants to add more
 //information just do it here.
 
 class Signal{
