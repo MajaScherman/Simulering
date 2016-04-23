@@ -24,8 +24,7 @@ class Dispatcher extends Proc {
 
 			switch (type) {
 			case 0: {
-				int rand = slump.nextInt(5);
-				switch (rand) {
+				switch (slump.nextInt(5)) {
 				case 0:
 					SignalList.SendSignal(ARRIVAL, sendTo1, time);
 					break;
