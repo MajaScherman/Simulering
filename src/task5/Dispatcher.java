@@ -7,7 +7,7 @@ import java.io.*;
 // signal names without dot notation
 class Dispatcher extends Proc {
 	public int numberInQueue = 0, accumulated, noMeasurements;
-	public int type = 2; // 0 - random, 1 - round-robin, 2 - min
+	public int type = 1; // 0 - random, 1 - round-robin, 2 - min
 	private int rr = 0;
 	public QS sendTo1;
 	public QS sendTo2;
@@ -85,7 +85,6 @@ class Dispatcher extends Proc {
 				}
 
 				int rand = slump.nextInt(minList.size());
-
 				int next = minList.get(rand);
 
 				switch (next) {
