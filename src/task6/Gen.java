@@ -16,14 +16,25 @@ class Gen extends Proc{
 	//There are two parameters:
 	public Proc sendTo;    //Anger till vilken process de genererade kunderna ska skickas //Where to send customers
 	public double lambda;  //Hur många per sekund som ska generas //How many to generate per second
+	private double lastCustomer;
 
-	//H�r nedan anger man vad som ska göras när en signal kommer //What to do when a signal arrives
+	//Här nedan anger man vad som ska göras när en signal kommer //What to do when a signal arrives
 	public void TreatSignal(Signal x){
 		switch (x.signalType){
 			case READY:{
 				SignalList.SendSignal(ARRIVAL, sendTo, time);
-				SignalList.SendSignal(READY, this, time + (2.0/lambda)*slump.nextDouble());}
+				if (time < 480) {
+					lastCustomer = time + expDist(lambda);
+					if (lastCustomer < 480) {
+						SignalList.SendSignal(READY, this, lastCustomer);
+					}
+				}
 				break;
+			}
 		}
+	}
+	
+	public double expDist(double lambda){
+		return (-1/lambda) * Math.log(1 - slump.nextDouble());
 	}
 }
