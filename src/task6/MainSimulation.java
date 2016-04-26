@@ -89,5 +89,6 @@ public class MainSimulation extends Global {
 		System.out.println("Mean number of recipes in queuing system: " + 1.0 * Q1.accumulated / Q1.noMeasurements);
 		System.out.println("Average closing time: " + avgClosingTimeString.toString());
 		System.out.println("Average time for a recipe in the system in minutes: " + avgRecipeTime);
+		System.out.println("test");
 	}
 }
