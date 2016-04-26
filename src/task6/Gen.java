@@ -10,7 +10,6 @@ class Gen extends Proc{
 	//The random number generator is started:
 	Random slump = new Random();
 
-	//Generatorn har två parametrar:
 	//There are two parameters:
 	public Proc sendTo;		//Where to send customers
 	public double lambda;   //How many to generate per second
