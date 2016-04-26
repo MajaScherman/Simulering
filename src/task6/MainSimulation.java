@@ -90,5 +90,6 @@ public class MainSimulation extends Global {
 		System.out.println("Average closing time: " + avgClosingTimeString.toString());
 		System.out.println("Average time for a recipe in the system in minutes: " + avgRecipeTime);
 		System.out.println("test");
+		System.out.println("test2");
 	}
 }
