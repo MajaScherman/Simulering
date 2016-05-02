@@ -17,6 +17,8 @@ c = -c;
 lb=[0 0 0 0 0]';
 
 options = optimoptions('linprog', 'Algorithm', 'simplex', 'Display', 'iter');
-[x, fval, exitflag, output, lambda] = linprog(c', A, b, Aeq, beq, lb, [], [], options);
+[x, fval, exitflag, output, lambda] = linprog(c, A, b, Aeq, beq, lb, [], [], options);
+x
+fval = -fval
 end
 
