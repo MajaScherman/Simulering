@@ -1,4 +1,4 @@
-function [ output_args ] = task5( input_args )
+function [ output_args ] = task1e()
 %TASK1 Summary of this function goes here
 %   Detailed explanation goes here
 %   multiplicera A och b med 10^3 f?r verkligheten
